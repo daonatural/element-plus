@@ -26,7 +26,6 @@ import type {
   VNodeArrayChildren,
   VNodeChild,
 } from 'vue'
-import type { Arrayable } from '@element-plus/utils'
 import type { AlignItemsProperty } from 'csstype'
 
 export const spaceProps = buildProps({
@@ -37,7 +36,7 @@ export const spaceProps = buildProps({
   },
 
   class: {
-    type: definePropType<Arrayable<Record<string, boolean> | string>>([
+    type: definePropType<string | string[] | Record<string, boolean>>([
       String,
       Object,
       Array,

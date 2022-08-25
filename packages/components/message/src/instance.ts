@@ -26,5 +26,5 @@ export const getInstance = (id: string) => {
 export const getLastOffset = (id: string): number => {
   const { prev } = getInstance(id)
   if (!prev) return 0
-  return prev.vm.exposed!.bottom.value
+  return prev.vm.exposeProxy!.bottom
 }

@@ -1,4 +1,4 @@
-import { buildProps, iconPropType } from '@element-plus/utils'
+import { buildProps } from '@element-plus/utils'
 import type { ExtractPropTypes } from 'vue'
 import type Prev from './prev.vue'
 
@@ -10,9 +10,6 @@ export const paginationPrevProps = buildProps({
   },
   prevText: {
     type: String,
-  },
-  prevIcon: {
-    type: iconPropType,
   },
 } as const)
 

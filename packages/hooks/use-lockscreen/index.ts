@@ -37,12 +37,13 @@ export const useLockscreen = (trigger: Ref<boolean>) => {
 
   let scrollBarWidth = 0
   let withoutHiddenClass = false
-  let bodyWidth = '0'
+  let bodyPaddingRight = '0'
+  let computedBodyPaddingRight = 0
 
   const cleanup = () => {
     removeClass(document.body, hiddenCls.value)
     if (withoutHiddenClass) {
-      document.body.style.width = bodyWidth
+      document.body.style.paddingRight = bodyPaddingRight
     }
   }
   watch(trigger, (val) => {
@@ -53,7 +54,11 @@ export const useLockscreen = (trigger: Ref<boolean>) => {
 
     withoutHiddenClass = !hasClass(document.body, hiddenCls.value)
     if (withoutHiddenClass) {
-      bodyWidth = document.body.style.width
+      bodyPaddingRight = document.body.style.paddingRight
+      computedBodyPaddingRight = Number.parseInt(
+        getStyle(document.body, 'paddingRight'),
+        10
+      )
     }
     scrollBarWidth = getScrollBarWidth(ns.namespace.value)
     const bodyHasOverflow =
@@ -64,7 +69,9 @@ export const useLockscreen = (trigger: Ref<boolean>) => {
       (bodyHasOverflow || bodyOverflowY === 'scroll') &&
       withoutHiddenClass
     ) {
-      document.body.style.width = `calc(100% - ${scrollBarWidth}px)`
+      document.body.style.paddingRight = `${
+        computedBodyPaddingRight + scrollBarWidth
+      }px`
     }
     addClass(document.body, hiddenCls.value)
   })

@@ -34,7 +34,4 @@ const tableData = [
 body {
   margin: 0;
 }
-.example-showcase .el-loading-mask {
-  z-index: 9;
-}
 </style>

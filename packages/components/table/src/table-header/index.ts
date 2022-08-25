@@ -187,6 +187,7 @@ export default defineComponent({
                       column.filteredValue && column.filteredValue.length > 0
                         ? 'highlight'
                         : '',
+                      column.labelClassName,
                     ],
                   },
                   [

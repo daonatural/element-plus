@@ -194,7 +194,15 @@
 
 <script lang="ts">
 // @ts-nocheck
-import { computed, defineComponent, nextTick, onMounted, ref, watch } from 'vue'
+import {
+  computed,
+  defineComponent,
+  inject,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+} from 'vue'
 import { isPromise } from '@vue/shared'
 import { debounce } from 'lodash-unified'
 
@@ -210,13 +218,9 @@ import ElScrollbar from '@element-plus/components/scrollbar'
 import ElTag, { tagProps } from '@element-plus/components/tag'
 import ElIcon from '@element-plus/components/icon'
 
+import { formContextKey, formItemContextKey } from '@element-plus/tokens'
 import { ClickOutside as Clickoutside } from '@element-plus/directives'
-import {
-  useFormItem,
-  useLocale,
-  useNamespace,
-  useSize,
-} from '@element-plus/hooks'
+import { useLocale, useNamespace, useSize } from '@element-plus/hooks'
 
 import {
   debugWarn,
@@ -234,6 +238,7 @@ import { ArrowDown, Check, CircleClose } from '@element-plus/icons-vue'
 
 import type { Options } from '@element-plus/components/popper'
 import type { ComputedRef, PropType, Ref } from 'vue'
+import type { FormContext, FormItemContext } from '@element-plus/tokens'
 import type {
   CascaderNode,
   CascaderValue,
@@ -360,7 +365,8 @@ export default defineComponent({
     const nsInput = useNamespace('input')
 
     const { t } = useLocale()
-    const { form, formItem } = useFormItem()
+    const elForm = inject(formContextKey, {} as FormContext)
+    const elFormItem = inject(formItemContextKey, {} as FormItemContext)
 
     const tooltipRef: Ref<tooltipType | null> = ref(null)
     const input: Ref<inputType | null> = ref(null)
@@ -377,7 +383,7 @@ export default defineComponent({
     const suggestions: Ref<CascaderNode[]> = ref([])
     const isOnComposition = ref(false)
 
-    const isDisabled = computed(() => props.disabled || form?.disabled)
+    const isDisabled = computed(() => props.disabled || elForm.disabled)
     const inputPlaceholder = computed(
       () => props.placeholder || t('el.cascader.placeholder')
     )
@@ -422,7 +428,7 @@ export default defineComponent({
         emit(UPDATE_MODEL_EVENT, val)
         emit(CHANGE_EVENT, val)
         if (props.validateEvent) {
-          formItem?.validate('change').catch((err) => debugWarn(err))
+          elFormItem.validate?.('change').catch((err) => debugWarn(err))
         }
       },
     })
@@ -444,7 +450,9 @@ export default defineComponent({
           updatePopperPosition()
           nextTick(panel.value?.scrollToExpandingNode)
         } else if (props.filterable) {
-          syncPresentTextValue()
+          const { value } = presentText
+          inputValue.value = value
+          searchInputValue.value = value
         }
 
         emit('visible-change', visible)
@@ -628,16 +636,7 @@ export default defineComponent({
 
     const handleClear = () => {
       panel.value?.clearCheckedNodes()
-      if (!popperVisible.value && props.filterable) {
-        syncPresentTextValue()
-      }
       togglePopperVisible(false)
-    }
-
-    const syncPresentTextValue = () => {
-      const { value } = presentText
-      inputValue.value = value
-      searchInputValue.value = value
     }
 
     const handleSuggestionClick = (node: CascaderNode) => {
@@ -679,12 +678,7 @@ export default defineComponent({
       const lastTag = tags[tags.length - 1]
       pressDeleteCount = searchInputValue.value ? 0 : pressDeleteCount + 1
 
-      if (
-        !lastTag ||
-        !pressDeleteCount ||
-        (props.collapseTags && tags.length > 1)
-      )
-        return
+      if (!lastTag || !pressDeleteCount) return
 
       if (lastTag.hitState) {
         deleteTag(lastTag)

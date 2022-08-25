@@ -11,7 +11,6 @@ import { NOOP, isObject } from '@vue/shared'
 import {
   FORWARD_REF_INJECTION_KEY,
   useForwardRefDirective,
-  useNamespace,
 } from '@element-plus/hooks'
 import { debugWarn } from '@element-plus/utils'
 
@@ -76,8 +75,7 @@ function findFirstLegitChild(node: VNode[] | undefined): VNode | null {
 }
 
 function wrapTextContent(s: string | VNode) {
-  const ns = useNamespace('only-child')
-  return <span class={ns.e('content')}>{s}</span>
+  return <span class="el-only-child__content">{s}</span>
 }
 
 export type OnlyChildExpose = {

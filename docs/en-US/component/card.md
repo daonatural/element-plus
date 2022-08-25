@@ -57,7 +57,6 @@ card/shadow
 
 ## Slots
 
-| Name   | Description                |
-| ------ | -------------------------- |
-| —      | customize default content  |
-| header | content of the Card header |
+| Name | Description               |
+| ---- | ------------------------- |
+| —    | customize default content |

@@ -68,4 +68,3 @@ link/with-icon
 | Name | Description               |
 | ---- | ------------------------- |
 | —    | customize default content |
-| icon | customize icon component  |

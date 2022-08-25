@@ -7,12 +7,10 @@ import {
   ref,
   watch,
 } from 'vue'
-import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
 import {
   buildProps,
   debugWarn,
   definePropType,
-  iconPropType,
   mutable,
 } from '@element-plus/utils'
 import { useLocale, useNamespace } from '@element-plus/hooks'
@@ -82,17 +80,9 @@ export const paginationProps = buildProps({
     type: String,
     default: '',
   },
-  prevIcon: {
-    type: iconPropType,
-    default: () => ArrowLeft,
-  },
   nextText: {
     type: String,
     default: '',
-  },
-  nextIcon: {
-    type: iconPropType,
-    default: () => ArrowRight,
   },
   small: Boolean,
   background: Boolean,
@@ -288,7 +278,6 @@ export default defineComponent({
           disabled: props.disabled,
           currentPage: currentPageBridge.value,
           prevText: props.prevText,
-          prevIcon: props.prevIcon,
           onClick: prev,
         }),
         jumper: h(Jumper),
@@ -304,7 +293,6 @@ export default defineComponent({
           currentPage: currentPageBridge.value,
           pageCount: pageCountBridge.value,
           nextText: props.nextText,
-          nextIcon: props.nextIcon,
           onClick: next,
         }),
         sizes: h(Sizes, {

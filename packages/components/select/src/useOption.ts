@@ -63,7 +63,7 @@ export function useOption(props, states) {
       return (
         arr &&
         arr.some((item) => {
-          return toRaw(get(item, valueKey)) === get(target, valueKey)
+          return get(item, valueKey) === get(target, valueKey)
         })
       )
     }

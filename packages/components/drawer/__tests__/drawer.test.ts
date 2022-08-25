@@ -355,7 +355,6 @@ describe('Drawer', () => {
 
     vm.visible = true
     await nextTick()
-    await nextTick()
     expect(open).toHaveBeenCalled()
     drawer.afterEnter()
     expect(opened).toHaveBeenCalled()

@@ -1,4 +1,4 @@
-import { buildProps, iconPropType } from '@element-plus/utils'
+import { buildProps } from '@element-plus/utils'
 import type { ExtractPropTypes } from 'vue'
 import type Next from './next.vue'
 
@@ -14,9 +14,6 @@ export const paginationNextProps = buildProps({
   },
   nextText: {
     type: String,
-  },
-  nextIcon: {
-    type: iconPropType,
   },
 } as const)
 

@@ -15,7 +15,7 @@ export const useMarks = (props: SliderProps) => {
 
     const marksKeys = Object.keys(props.marks)
     return marksKeys
-      .map(Number.parseFloat)
+      .map(parseFloat)
       .sort((a, b) => a - b)
       .filter((point) => point <= props.max && point >= props.min)
       .map(

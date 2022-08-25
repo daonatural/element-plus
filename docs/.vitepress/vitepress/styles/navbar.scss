@@ -59,7 +59,7 @@
   z-index: var(--nav-z-index);
 
   @include respond-to('lg') {
-    position: sticky;
+    position: fixed;
     width: 100%;
   }
 }

@@ -27,7 +27,6 @@ import {
   ITEM_RENDER_EVT,
   RTL,
   RTL_OFFSET_NAG,
-  RTL_OFFSET_POS_ASC,
   RTL_OFFSET_POS_DESC,
   SCROLL_EVT,
 } from '../defaults'
@@ -387,11 +386,11 @@ const createList = ({
               // This is not the case for all browsers though (e.g. Chrome reports values as positive, measured relative to the left).
               // So we need to determine which browser behavior we're dealing with, and mimic it.
               switch (getRTLOffsetType()) {
-                case RTL_OFFSET_NAG: {
+                case 'negative': {
                   windowElement.scrollLeft = -scrollOffset
                   break
                 }
-                case RTL_OFFSET_POS_ASC: {
+                case 'positive-ascending': {
                   windowElement.scrollLeft = scrollOffset
                   break
                 }
