@@ -84,17 +84,17 @@
       color: getCssVar('select-input-color');
       font-size: getCssVar('select-input-font-size');
       transition: transform getCssVar('transition-duration');
-      transform: rotateZ(180deg);
+      transform: rotateZ(0deg);
       cursor: pointer;
 
       @include when(reverse) {
-        transform: rotateZ(0deg);
+        transform: rotateZ(-180deg);
       }
 
       @include when(show-close) {
         font-size: getCssVar('select-font-size');
         text-align: center;
-        transform: rotateZ(180deg);
+        transform: rotateZ(0deg);
         border-radius: getCssVar('border-radius-circle');
         color: getCssVar('select-input-color');
         transition: getCssVar('transition', 'color');
@@ -143,13 +143,11 @@
     color: getCssVar('select-multiple-input-color');
     font-size: getCssVar('select-font-size');
     appearance: none;
-    height: 24px;
+    height: 28px;
     background-color: transparent;
 
-    @each $size in (large, small) {
-      @include when($size) {
-        height: map.get($tag-height, $size);
-      }
+    @include when(small) {
+      height: 14px;
     }
   }
 
@@ -170,7 +168,7 @@
 
   @include e(tags) {
     position: absolute;
-    line-height: map.get($tag, 'line-height');
+    line-height: normal;
     top: 50%;
     transform: translateY(-50%);
     @include select-tag-normal;
